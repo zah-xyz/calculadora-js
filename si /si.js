@@ -1,4 +1,4 @@
-
+'use strict';
 let expresion = "";
 
 function agregar(valor) {
@@ -18,33 +18,19 @@ function operacion(operador) {
 }
 
 function calcular() {
-   if (expresion.trim() === "") {
-    expresion = "0"; 
-    return;
-  }
-  try {
-    const resultado = eval(expresion);
-    expresion = resultado.toString();
-
+   try {
+    let resultado = eval(operacion.replace('%', '/100'));
+    pantalla.textContent = resultado;
+    operacion = resultado.toString();
   } catch {
-    expresion = "Sintax Error";
+    pantalla.textContent = 'Sintax Error';
+    operacion = '';
   }
 }
-
-function getPantalla() {
-  return expresion === "" ? "0" : expresion;
-}
-
-function setExpresion(exp) {
-  expresion = exp;
-}
-
 module.exports = {
   agregar,
   borrar_todo,
   retroceder,
   operacion,
   calcular,
-  getPantalla,
-  setExpresion,
 };
