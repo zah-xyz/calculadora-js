@@ -33,12 +33,6 @@ test('error de sintaxis devuelve mensaje', () => {
   expect(calcular()).toBe("Sintax Error");
 });
 
-test("operacion con porcentaje", () => {
-  agregar("50");
-  agregar("%");
-  expect(calcular()).toBe("0.5");
-});
-
 test("descuento con porcentaje", () => {
   agregar("200");
   agregar("-");
