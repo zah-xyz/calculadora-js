@@ -1,41 +1,33 @@
-let expresion = "";
+let operacion = '';
 
 function agregar(valor) {
-    expresion += valor;
-    return expresion;
+  if (operacion === '0' || operacion === 'Sintax Error') {
+    operacion = valor;
+  } else {
+    operacion += valor;
+  }
+  return operacion;
 }
 
 function borrar_todo() {
-    expresion = "";
-    return "0";
+  operacion = '';
+  return '0';
 }
 
 function retroceder() {
-    expresion = expresion.slice(0, -1);
-    return expresion || "0";
-}
-
-function operacion(operador) {
-    expresion += operador;
-    return expresion;
+  operacion = operacion.slice(0, -1);
+  return operacion || '0';
 }
 
 function calcular() {
-    try {
-        const resultado = eval(expresion);
-        expresion = resultado.toString();
-        return expresion;
-    } catch (error) {
-        expresion = "";
-        return "Sintax Error";
-    }
+  try {
+    let resultado = eval(operacion.replace(/%/g, '/100'));
+    operacion = resultado.toString();
+    return operacion;
+  } catch {
+    operacion = '';
+    return 'Sintax Error';
+  }
 }
 
-
-module.exports = {
-    agregar,
-    borrar_todo,
-    retroceder,
-    operacion,
-    calcular
-};
+module.exports = { agregar, borrar_todo, retroceder, calcular };
