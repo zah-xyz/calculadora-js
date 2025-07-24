@@ -32,3 +32,16 @@ test('error de sintaxis devuelve mensaje', () => {
   agregar("5+*3");
   expect(calcular()).toBe("Sintax Error");
 });
+
+test("operacion con porcentaje", () => {
+  agregar("50");
+  agregar("%");
+  expect(calcular()).toBe("0.5");
+});
+
+test("descuento con porcentaje", () => {
+  agregar("200");
+  agregar("-");
+  agregar("20%");
+  expect(calcular()).toBe("160");
+});

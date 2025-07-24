@@ -120,17 +120,38 @@
       pantalla.textContent = operacion || '0';
     }
 
-    function calcular() {
+function calcular() {
       try {
-        // Reemplaza todos los % por /100
-        let resultado = eval(operacion.replace(/%/g, '/100'));
-        pantalla.textContent = resultado;
+        if (operacion.includes('%')) {
+          if (operacion.includes('+') || operacion.includes('-')) {
+            let operador = operacion.includes('+') ? '+' : '-';
+            let partes = operacion.split(operador);
+            let base = parseFloat(partes[0]);
+            let porcentajeStr = partes[1].replace('%', '');
+            let porcentaje = parseFloat(porcentajeStr);
+
+            if (isNaN(base) || isNaN(porcentaje)) throw 'Error';
+
+            let resultado = (operador === '+')
+              ? base + (base * porcentaje / 100)
+              : base - (base * porcentaje / 100);
+
+            operacion = resultado.toString();
+            pantalla.textContent = operacion;
+            return;
+          }
+        }
+        
+        // Para otros casos sin % o que no sean suma/resta con porcentaje
+        let resultado = eval(operacion);
         operacion = resultado.toString();
+        pantalla.textContent = operacion;
       } catch {
-        pantalla.textContent = 'Sintax Error';
         operacion = '';
+        pantalla.textContent = 'Syntax Error';
       }
     }
+
   </script>
 </body>
 </html>

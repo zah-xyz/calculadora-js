@@ -21,7 +21,24 @@ function retroceder() {
 
 function calcular() {
   try {
-    let resultado = eval(operacion.replace(/%/g, '/100'));
+    if (operacion.includes('%')) {
+      let op = operacion.includes('-') ? '-' : operacion.includes('+') ? '+' : null;
+      if (op) {
+        let partes = operacion.split(op);
+        let numero = parseFloat(partes[0]);
+        let porcentaje = parseFloat(partes[1]);
+
+        if (isNaN(numero) || isNaN(porcentaje)) throw 'Error';
+
+        let resultado = (op === '-')
+          ? numero - (numero * porcentaje / 100)
+          : numero + (numero * porcentaje / 100);
+
+        operacion = resultado.toString();
+        return operacion;
+      }
+    }
+    let resultado = eval(operacion);
     operacion = resultado.toString();
     return operacion;
   } catch {
