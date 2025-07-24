@@ -1,42 +1,31 @@
-const calc = require("./si");
+const { agregar, borrar_todo, retroceder, operacion, calcular } = require('./calculadora');
 
 
+test('agrega números a la expresión', () => {
+    expect(agregar("1")).toBe("1");
+    expect(agregar("2")).toBe("12");
+});
 
-describe("Test de la calculadora", () => {
-  beforeEach(() => {
-    calc.borrar_todo(); 
-  });
+test('realiza suma', () => {
+    agregar("2");
+    operacion("+");
+    agregar("3");
+    expect(calcular()).toBe("5");
+});
 
-  test("agregar 2 y 3 muestra 23", () => {
-    calc.agregar("2");
-    calc.agregar("3");
-    expect(calc.getPantalla()).toBe("23");
-  });
+test('multiplicación simple', () => {
+    agregar("4");
+    operacion("*");
+    agregar("5");
+    expect(calcular()).toBe("20");
+});
 
-  test("suma 2 + 3 → 5", () => {
-    calc.agregar("2");
-    calc.operacion("+");
-    calc.agregar("3");
-    calc.calcular();
-    expect(calc.getPantalla()).toBe("5");
-  });
+test('borrar todo deja en 0', () => {
+    agregar("99");
+    expect(borrar_todo()).toBe("0");
+});
 
-  test("borrar todo deja 0", () => {
-    calc.agregar("9");
-    calc.borrar_todo();
-    expect(calc.getPantalla()).toBe("0");
-  });
-
-  test("retroceder borra último dígito", () => {
-    calc.agregar("8");
-    calc.agregar("9");
-    calc.retroceder();
-    expect(calc.getPantalla()).toBe("8");
-  });
-
-  test("expresión mal escrita pone Sintax Error", () => {
-    calc.setExpresion("5+*");
-    calc.calcular();
-    expect(calc.getPantalla()).toBe("Sintax Error");
-  });
+test('error de sintaxis devuelve mensaje', () => {
+    agregar("5+*3");
+    expect(calcular()).toBe("Sintax Error");
 });

@@ -1,36 +1,41 @@
-'use strict';
 let expresion = "";
 
 function agregar(valor) {
-  expresion += valor;
+    expresion += valor;
+    return expresion;
 }
 
 function borrar_todo() {
-  expresion = "";
+    expresion = "";
+    return "0";
 }
 
 function retroceder() {
-  expresion = expresion.slice(0, -1);
+    expresion = expresion.slice(0, -1);
+    return expresion || "0";
 }
 
 function operacion(operador) {
-  expresion += operador;
+    expresion += operador;
+    return expresion;
 }
 
 function calcular() {
-   try {
-    let resultado = eval(operacion.replace('%', '/100'));
-    pantalla.textContent = resultado;
-    operacion = resultado.toString();
-  } catch {
-    pantalla.textContent = 'Sintax Error';
-    operacion = '';
-  }
+    try {
+        const resultado = eval(expresion);
+        expresion = resultado.toString();
+        return expresion;
+    } catch (error) {
+        expresion = "";
+        return "Sintax Error";
+    }
 }
+
+
 module.exports = {
-  agregar,
-  borrar_todo,
-  retroceder,
-  operacion,
-  calcular,
+    agregar,
+    borrar_todo,
+    retroceder,
+    operacion,
+    calcular
 };
