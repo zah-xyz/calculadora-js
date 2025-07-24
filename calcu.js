@@ -2,7 +2,7 @@ let expresion = "";
 const Pantalla = document.getElementById("Pantalla")
 
 function agregar(valor){
-    if(Pantalla.innerText=== "0") Pantalla.innerText = "";
+    if(Pantalla.innerText=== "0") Pantalla.innerText = "0";
     Pantalla.innerText += valor;
     expresion += valor;
 }
@@ -27,6 +27,7 @@ function calcular(){
     try {
         const resultado = eval(expresion);
         Pantalla.innerText = resultado;
+        expresion = resultado.toString();
 
     } catch (error) {
         Pantalla.innerText = "Sintax Error";
